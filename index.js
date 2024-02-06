@@ -36,6 +36,30 @@ var createRecording = edge.func(function() {/*
                     IsAudioEnabled = true,
                     IsInputDeviceEnabled = true,
                     IsOutputDeviceEnabled = true,
+                },
+                VideoEncoderOptions = new VideoEncoderOptions
+                {
+                    Bitrate = 8000 * 1000,
+                    Framerate = 60,
+                    IsFixedFramerate = true,
+                    //Currently supported are H264VideoEncoder and H265VideoEncoder
+                    Encoder = new H264VideoEncoder
+                    {
+                        BitrateMode = H264BitrateControlMode.CBR,
+                        EncoderProfile = H264Profile.Main,
+                    },
+                    //Fragmented Mp4 allows playback to start at arbitrary positions inside a video stream,
+                    //instead of requiring to read the headers at the start of the stream.
+                    IsFragmentedMp4Enabled = true,
+                    //If throttling is disabled, out of memory exceptions may eventually crash the program,
+                    //depending on encoder settings and system specifications.
+                    IsThrottlingDisabled = false,
+                    //Hardware encoding is enabled by default.
+                    IsHardwareEncodingEnabled = true,
+                    //Low latency mode provides faster encoding, but can reduce quality.
+                    IsLowLatencyEnabled = false,
+                    //Fast start writes the mp4 header at the beginning of the file, to facilitate streaming.
+                    IsMp4FastStartEnabled = false
                 }
             };
 
